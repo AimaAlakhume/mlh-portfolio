@@ -17,7 +17,6 @@ class Person:
         self.hob4 = hob4
 
 
-
 load_dotenv()
 app = Flask(__name__)
 
@@ -32,7 +31,7 @@ else:
     port=3306)
 
 print(mydb)
-
+mydb.close()
 
 sristi = Person("Sristi", "Panchu", "Tufts University", "Computer Science", "crafting (specifically quilling)", "dancing", "reading", "exploring new places")
 aima = Person("Aima", "Alakhume", "New York University", "Electrical Engineering", "painting", "writing", "reading", "exploring new places")
@@ -62,32 +61,33 @@ class TimelinePost(Model):
 
 mydb.connect()
 mydb.create_tables([TimelinePost])
-
+mydb.close()
 
 #POST route
-@app.route('/api/timeline_post', methods=['POST'])
+@app.route('/api/timeline', methods=['POST', 'GET'])
 def post_time_line_post():
-    name = request.form['name']
-    email = request.form['email']
-    content = request.form['content']
-    timeline_post = TimelinePost.create(name=name, email=email, content=content)
-
-    return model_to_dict(timeline_post)
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        content = request.form['content']
+        timeline_post = TimelinePost.create(name=name, email=email, content=content)
+        mydb.close()
+        return model_to_dict(timeline_post) #write to database
+    else:
+        return render_template('timeline.html', title='Timeline')
 
 
 #GET endpoint
-@app.route('/api/timeline_post', methods=['GET'])
+@app.route('/api/show_posts', methods=['GET'])
 def get_time_line_post():
-    return {
+    r = {
         'timeline_posts': [
             model_to_dict(p)
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
+    mydb.close()
+    return r
 
 
-#timeline page
-@app.route('/timeline')
-def timeline():
-    return render_template('timeline.html', title='Timeline')
 
