@@ -3,12 +3,13 @@
 import unittest
 from peewee import *
 
-from app import TimelinePost
+from app import TimelinePost, get_timeline_posts
 
 MODELS = [TimelinePost]
 
 # use an in-memory SQLite for tests
 test_db = SqliteDatabase(':memory:')
+
 class TestTimelinePost(unittest.TestCase):
 	def setUp(self):
 		# Bind model classes to test db. Since we have a complete list of all models, we do not 
@@ -37,3 +38,9 @@ class TestTimelinePost(unittest.TestCase):
 		
 		response = get_time_line_post()
 		assert len(response['timeline_posts']) == 2
+
+                assert posts[0].name == "John Doe"
+                assert posts[0].email == "john@example.com"
+                assert posts[1].name == "Jane Doe"
+                assert posts[1].email == "jane@example.com"
+
