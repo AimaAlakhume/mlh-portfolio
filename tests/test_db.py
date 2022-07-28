@@ -38,9 +38,8 @@ class TestTimelinePost(unittest.TestCase):
 		
 		response = get_time_line_post()
 		assert len(response['timeline_posts']) == 2
-
+                
                 assert posts[0].name == "John Doe"
                 assert posts[0].email == "john@example.com"
                 assert posts[1].name == "Jane Doe"
                 assert posts[1].email == "jane@example.com"
-
