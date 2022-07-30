@@ -31,22 +31,17 @@ else:
     port=3306)
 
 print(mydb)
-mydb.close()
 
-sristi = Person("Sristi", "Panchu", "Tufts University", "Computer Science", "crafting (specifically quilling)", "dancing", "reading", "exploring new places")
+
 aima = Person("Aima", "Alakhume", "New York University", "Electrical Engineering", "painting", "writing", "reading", "exploring new places")
 
 @app.route('/')
 def index():
-    return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"))
+    return render_template('index.html', title="Aima Alakhume", url=os.getenv("URL"))
 
 @app.route('/aima')
 def abaima():
     return render_template('aboutaima.html', student = aima)
-
-@app.route('/sristi')
-def absristi():
-    return render_template('aboutsristi.html', student = sristi)
 
 
 
@@ -61,10 +56,10 @@ class TimelinePost(Model):
 
 mydb.connect()
 mydb.create_tables([TimelinePost])
-mydb.close()
+
 
 #POST route
-@app.route('/api/timeline', methods=['POST', 'GET'])
+@app.route('/api/timeline', methods=['POST', 'GET']) #fix this shit
 def post_time_line_post():
     if request.method == 'POST':
         name = request.form['name']
@@ -86,6 +81,6 @@ def get_time_line_post():
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
-    mydb.close()
+
     return r
 
