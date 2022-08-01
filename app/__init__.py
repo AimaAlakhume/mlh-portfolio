@@ -34,7 +34,7 @@ else:
 print(mydb)
 
 
-aima = Person("Aima", "Alakhume", "New York University", "Electrical Engineering", "painting", "writing", "reading", "exploring new places")
+aima = Person("Aima", "Alakhume", "New York University", "Electrical Engineering", "painting", "writing", "reading novels", "exploring new places")
 
 @app.route('/')
 def index():
