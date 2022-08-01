@@ -58,7 +58,7 @@ class TimelinePost(Model):
 mydb.connect()
 mydb.create_tables([TimelinePost])
 
-@app.route('/api/timeline', methods=['POST'])
+@app.route('/api/show_posts', methods=['POST'])
 def post_time_line_post():
     if "name" not in request.form or request.form['name'] == '':
         return Response("Invalid name", status=400)
