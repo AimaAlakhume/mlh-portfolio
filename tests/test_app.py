@@ -23,8 +23,8 @@ class AppTestCase(unittest.TestCase):
 
     def test_timeline(self):
         response = self.client.get("/api/show_posts")
-        assert response.status_code == 200
         print('code given as:', response.status_code) #debug
+        assert response.status_code == 200 #PROBLEM
         assert response.is_json
         json = response.get_json()
         assert "timeline_posts" in json
@@ -50,9 +50,9 @@ class AppTestCase(unittest.TestCase):
 
         # POST request with empty content
         response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : ""})
-        assert response.status_code >= 400
+        print(response.status_code)
+        assert response.status_code == 400 #PROBLEM
         html = response.get_data(as_text=True)
-        print('HTML', html)
         assert "Bad Request" in html
 
         # POST request with malformed email
