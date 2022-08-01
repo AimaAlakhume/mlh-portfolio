@@ -23,7 +23,8 @@ class AppTestCase(unittest.TestCase):
 
     def test_timeline(self):
         response = self.client.get("/api/show_posts")
-        assert response.status_code == 200 ###
+        print(response.status_code)
+        assert response.status_code == 200
         assert response.is_json
         json = response.get_json()
         assert "timeline_posts" in json
@@ -43,9 +44,10 @@ class AppTestCase(unittest.TestCase):
     def test_malformed_timeline_post(self):
         # POST request with name missing
         response = self.client.post("/api/show_posts", data={"email": "aimailene@gmail.com", "content": "Hello world, I'm Aima!"})
+        print(response.status_code)
         assert response.status_code >= 400
         html = response.get_data(as_text=True)
-        assert "Invalid name" in html  ###
+        assert "Invalid name" in html
 
         # POST request with empty content
         response = self.client.post("/api/show_posts", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content": ""})
