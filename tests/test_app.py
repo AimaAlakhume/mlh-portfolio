@@ -50,7 +50,7 @@ class AppTestCase(unittest.TestCase):
 
         # POST request with empty content
         response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : ""})
-        print(response.status_code)
+        print('debugging the response:', response.status_code)
         assert response.status_code == 400 #PROBLEM
         html = response.get_data(as_text=True)
         assert "Bad Request" in html
