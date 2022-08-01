@@ -30,11 +30,11 @@ class AppTestCase(unittest.TestCase):
         assert len(json["timeline_posts"]) == 0
         
         # test /api/timeline_post GET and POST apis
-        response = self.client.post("/api/show_posts", data={"name": "john", "email": "john@example.com", "content": "Hello world, I'm John!"})
+        response = self.client.post("/api/show_posts", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : "Hello world, I'm Aima!"})
         html = response.get_data(as_text=True)
-        assert "john" in html
-        assert "john@example.com" in html
-        assert "Hello world, I'm John!" in html
+        assert "Aima Alakhume" in html
+        assert "aimailene@gmail.com" in html
+        assert "Hello world, I'm Aima!" in html
 
         response = self.client.get("/api/show_posts")
         json = response.get_json()
@@ -50,7 +50,6 @@ class AppTestCase(unittest.TestCase):
 
         # POST request with empty content
         response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : ""})
-        print('debugging the response:', response.status_code)
         assert response.status_code >= 400 #PROBLEM
         html = response.get_data(as_text=True)
         assert "Invalid content" in html
