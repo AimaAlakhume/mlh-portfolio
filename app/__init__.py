@@ -57,34 +57,6 @@ class TimelinePost(Model):
 mydb.connect()
 mydb.create_tables([TimelinePost])
 
-"""
-#POST route
-@app.route('/api/timeline', methods=['POST', 'GET']) #fix this shit
-def post_time_line_post():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        content = request.form['content']
-        timeline_post = TimelinePost.create(name=name, email=email, content=content)
-        mydb.close()
-        return model_to_dict(timeline_post) #write to database
-    else:
-        return render_template('timeline.html', title='Timeline')
-
-
-#GET endpoint
-@app.route('/api/show_posts', methods=['GET'])
-def get_time_line_post():
-    r = {
-        'timeline_posts': [
-            model_to_dict(p)
-            for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
-        ]
-    }
-
-    return r
-"""
-
 @app.route('/api/timeline', methods=['POST'])
 def post_time_line_post():
     if "name" not in request.form or request.form['name'] == '':
@@ -117,3 +89,5 @@ def get_time_line_post():
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
+    
+mydb.close()
