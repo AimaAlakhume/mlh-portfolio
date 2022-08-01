@@ -83,7 +83,7 @@ def get_time_line_post():
   
 
 @app.route('/api/show_posts', methods=['POST'])
-def get_time_line_post():
+def post_time_line_post():
     res = {
         'timeline_posts': [
             model_to_dict(p)
