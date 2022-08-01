@@ -22,7 +22,7 @@ class AppTestCase(unittest.TestCase):
         assert '<title>About Aima</title>' in html
 
     def test_timeline(self):
-        response = self.client.get("/api/show_posts")
+        response = self.client.get("/api/timeline")
         print(response.status_code)
         assert response.status_code == 200
         assert response.is_json
