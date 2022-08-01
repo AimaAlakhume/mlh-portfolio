@@ -1,7 +1,7 @@
 import unittest
 from peewee import *
 
-from app import TimelinePost, post_time_line_post
+from app import TimelinePost, get_time_line_post
 
 MODELS = [TimelinePost]
 
@@ -34,7 +34,7 @@ class TestTimelinePost(unittest.TestCase):
 			second_post = TimelinePost.create(name='Jane Doe', email='jane@example.com', content='Hello world, I\'m Jane!')
 			assert second_post.id == 2
 
-			response = post_time_line_post()
+			response = get_time_line_post()
 			assert len(response['timeline_posts']) == 2
 			assert first_post.name == "John Doe"
 			assert first_post.email == "john@example.com"
