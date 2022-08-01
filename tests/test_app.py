@@ -42,19 +42,19 @@ class AppTestCase(unittest.TestCase):
 
     def test_malformed_timeline_post(self):
         # POST request with name missing
-        response = self.client.post("/api/show_posts", data={"email": "aimailene@gmail.com", "content": "Hello world, I'm Aima!"})
+        response = self.client.post("/api/timeline", data={"email": "aimailene@gmail.com", "content": "Hello world, I'm Aima!"})
         assert response.status_code >= 400
         html = response.get_data(as_text=True)
         assert "Invalid name" in html
 
         # POST request with empty content
-        response = self.client.post("/api/show_posts", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content": ""})
+        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content": ""})
         assert response.status_code >= 400
         html = response.get_data(as_text=True)
         assert "Invalid content" in html
 
         # POST request with malformed email
-        response = self.client.post("/api/show_posts", data={"name": "Aima Alakhume", "email": "not-an-email", "content" : "Hello world, I'm Aima!"})
+        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "not-an-email", "content" : "Hello world, I'm Aima!"})
         assert response.status_code >= 400
         html = response.get_data(as_text=True)
         assert "Invalid email" in html
