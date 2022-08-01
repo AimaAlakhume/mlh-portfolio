@@ -92,7 +92,7 @@ def post_time_line_post():
     
     def validate(email):
         pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
-        if re.match(pat,email):
+        if Response.match(pat, email):
             return True
         return False
 
