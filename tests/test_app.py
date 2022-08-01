@@ -7,7 +7,7 @@ os.environ['TESTING'] = 'true'
 from app import app
 
 class AppTestCase(unittest.TestCase):
-    def __init__(self):
+    def setUp(self):
         self.client = app.test_client()
 
     def test_home(self):
