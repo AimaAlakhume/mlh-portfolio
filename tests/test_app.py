@@ -23,7 +23,6 @@ class AppTestCase(unittest.TestCase):
 
     def test_timeline(self):
         response = self.client.get("/api/timeline")
-        print(response.status_code)
         assert response.status_code == 200
         assert response.is_json
         json = response.get_json()
