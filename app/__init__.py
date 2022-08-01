@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from peewee import *
 from datetime import *
 from playhouse.shortcuts import model_to_dict
+import re
 
 class Person:
     def __init__(self, f_name, l_name, school, major, hob1, hob2, hob3, hob4):
@@ -64,7 +65,7 @@ def post_time_line_post():
     
     def validate(email):
         pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
-        if Response.match(pat, email):
+        if re.match(pat, email):
             return True
         return False
 
@@ -89,5 +90,5 @@ def get_time_line_post():
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
-    
+
 mydb.close()
