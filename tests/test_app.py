@@ -30,7 +30,7 @@ class AppTestCase(unittest.TestCase):
         assert "timeline_posts" in json
         assert len(json["timeline_posts"]) == 0
         
-        # test /api/show_posts GET and POST apis
+        # test /api/timeline GET and POST apis
         response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : "Hello world, I'm Aima!"})
         html = response.get_data(as_text=True)
         assert "Aima Alakhume" in html
