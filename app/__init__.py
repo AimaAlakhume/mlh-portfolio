@@ -84,11 +84,11 @@ def post_time_line_post():
 
 @app.route('/api/show_posts', methods=['GET'])
 def get_time_line_post():
-    return {
+    res = {
         'timeline_posts': [
             model_to_dict(p)
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
 
-mydb.close()
+    return res
