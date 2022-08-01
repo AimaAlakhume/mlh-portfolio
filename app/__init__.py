@@ -96,9 +96,9 @@ def post_time_line_post():
             return True
         return False
 
-    if 'email' not in request.form or validate(request.form['email']) == False:
+    if "email" not in request.form or validate(request.form['email']) == False:
         return Response("Invalid email", status=400)
-    if 'content' not in request.form or validate(request.form['content']) == False:
+    if "content" not in request.form or request.form['content'] == '':
         return Response("Invalid content", status=400)
     
     name = request.form["name"]

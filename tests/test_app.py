@@ -48,7 +48,7 @@ class AppTestCase(unittest.TestCase):
         assert "Invalid name" in html
 
         # POST request with empty content
-        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com"})
+        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content": ""})
         assert response.status_code >= 400 #PROBLEM
         html = response.get_data(as_text=True)
         assert "Invalid content" in html
