@@ -22,7 +22,7 @@ class AppTestCase(unittest.TestCase):
         assert '<title>About Aima</title>' in html
 
     def test_timeline(self):
-        response = self.client.get("/api/show_posts")
+        response = self.client.get("/api/timeline")
         print(response.status_code)
         assert response.status_code == 200
         assert response.is_json
@@ -31,20 +31,19 @@ class AppTestCase(unittest.TestCase):
         assert len(json["timeline_posts"]) == 0
         
         # test /api/show_posts GET and POST apis
-        response = self.client.post("/api/show_posts", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : "Hello world, I'm Aima!"})
+        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : "Hello world, I'm Aima!"})
         html = response.get_data(as_text=True)
         assert "Aima Alakhume" in html
         assert "aimailene@gmail.com" in html
         assert "Hello world, I'm Aima!" in html
 
-        response = self.client.get("/api/show_posts")
+        response = self.client.get("/api/timeline")
         json = response.get_json()
         assert len(json["timeline_posts"]) == 1
 
     def test_malformed_timeline_post(self):
         # POST request with name missing
         response = self.client.post("/api/timeline", data={"email": "aimailene@gmail.com", "content": "Hello world, I'm Aima!"})
-        print(response.status_code)
         assert response.status_code >= 400
         html = response.get_data(as_text=True)
         assert "Invalid name" in html
