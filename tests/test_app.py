@@ -29,7 +29,7 @@ class AppTestCase(unittest.TestCase):
         assert "timeline_posts" in json
         assert len(json["timeline_posts"]) == 0
         
-        # test /api/timeline_post GET and POST apis
+        # test /api/show_posts GET and POST apis
         response = self.client.post("/api/show_posts", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : "Hello world, I'm Aima!"})
         html = response.get_data(as_text=True)
         assert "Aima Alakhume" in html
@@ -48,7 +48,7 @@ class AppTestCase(unittest.TestCase):
         assert "Invalid name" in html
 
         # POST request with empty content
-        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com", "content" : ""})
+        response = self.client.post("/api/timeline", data={"name": "Aima Alakhume", "email": "aimailene@gmail.com"})
         assert response.status_code >= 400 #PROBLEM
         html = response.get_data(as_text=True)
         assert "Invalid content" in html
