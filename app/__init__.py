@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 from dotenv import load_dotenv
 from peewee import *
 from datetime import *
@@ -57,7 +57,7 @@ class TimelinePost(Model):
 mydb.connect()
 mydb.create_tables([TimelinePost])
 
-
+"""
 #POST route
 @app.route('/api/timeline', methods=['POST', 'GET']) #fix this shit
 def post_time_line_post():
@@ -83,4 +83,37 @@ def get_time_line_post():
     }
 
     return r
+"""
 
+@app.route('/api/timeline', methods=['POST'])
+def post_time_line_post():
+    if 'name' not in request.form or request.form['name'] == '':
+        return Response("Invalid name", status=400)
+    
+    def validate(email):
+        pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+        if re.match(pat,email):
+            return True
+        return False
+
+    if 'email' not in request.form or validate(request.form['email']) == False:
+        return Response("Invalid email", status=400)
+    if 'content' not in request.form or request.form['content'] == '':
+        return Response("Invalid content", status=400)
+    
+    name = request.form['name']
+    email = request.form['email']
+    content = request.form['content']
+
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+    return model_to_dict(timeline_post)
+  
+
+@app.route('/api/show_posts', methods=['GET'])
+def get_time_line_post():
+    return {
+        'timeline_posts': [
+            model_to_dict(p)
+            for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+        ]
+    }
